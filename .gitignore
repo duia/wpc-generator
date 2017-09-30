@@ -1,11 +1,4 @@
-*.iml
-*.classpath
-*.project
 
 .idea/
 target/
-.setting/
-.settings/
-log4j*
-
-/src/main/resources/generatorConfig.xml
+generated-sources
