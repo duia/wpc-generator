@@ -9,14 +9,26 @@
 	<resultMap id="BaseResultMap" type="${basepackage}.${subpackage}.model.${className}">
         <#list table.columns as column>
 		<#if column.pk>
-		<id property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+		<id property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#if>
 		<#if !column.pk>
-		<result property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcSqlTypeName}"/>
+		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#if>
 		</#list>
+		<#if table.tree == 'true'>
+		<association property="parent" javaType="${basepackage}.${subpackage}.model.${className}">
+			<#list table.columns as column>
+			<#if column.pk>
+			<id property="${column.columnNameLower}" column="parent.${column.sqlName}"/>
+			</#if>
+			<#if !column.pk>
+			<result property="${column.columnNameLower}" column="${column.sqlName}"/>
+			</#if>
+			</#list>
+		</association>
+		</#if>
 	</resultMap>
-	
+
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="table_columns">
 		<#list table.columns as column>
@@ -156,6 +168,25 @@
 	<sql id="limit">
 		<if test="start != null and length != null">LIMIT ${'#'}{start}, ${'#'}{length}</if>
 	</sql>
+
+	<#if table.tree == 'true'>
+	<select id="findByParentIdsLike" resultMap="BaseResultMap">
+		SELECT
+			id,
+			parent_id AS "parent.id",
+			parent_ids
+		FROM ${table.sqlName}
+		WHERE del_flag != ${'#'}{DEL_FLAG_DELETE} AND parent_ids LIKE ${'#'}{parentIds}
+		ORDER BY sort
+	</select>
+
+	<update id="updateParentIds">
+		UPDATE ${table.sqlName} SET
+			parent_id = ${'#'}{parent.id},
+			parent_ids = ${'#'}{parentIds}
+		WHERE id = ${'#'}{id}
+	</update>
+	</#if>
 
 	<!-- 自定义sql语句 -->
 

@@ -6,8 +6,8 @@
 package ${basepackage}.${subpackage}.dao;
 
 import ${basepackage}.${subpackage}.model.${className};
-import ${basepackage}.common.base.dao.BaseDao;
+import ${basepackage}.common.base.dao.<#if table.tree=='true'>Tree</#if>BaseDao;
 
-public interface ${className}Dao extends BaseDao<${className}, Long> {
+public interface ${className}Dao extends <#if table.tree=='true'>Tree</#if>BaseDao<${className}> {
     
 }

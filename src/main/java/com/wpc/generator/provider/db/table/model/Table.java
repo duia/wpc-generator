@@ -21,6 +21,7 @@ public class Table {
 	String remarks;
 	String className;
 	String classNameLower;
+	String tree;
 	/** the name of the owner of the synonym if this table is a synonym */
 	private String ownerSynonymName = null;
 	LinkedHashSet<Column> columns = new LinkedHashSet<Column>();
@@ -358,7 +359,21 @@ public class Table {
 	public String getShortName() {
         return removeTableSqlNamePrefix(sqlName);
     }
-	
+
+	public String getTree() {
+		List<Column> list = getNotPkColumns();
+		for (Column c : list) {
+			if (c.contains("parent_id,parent_ids")) {
+				return "true";
+			}
+		}
+		return "false";
+	}
+
+	public void setTree(String tree) {
+		this.tree = tree;
+	}
+
 	public String toString() {
 		return "Database Table:"+getSqlName()+" to ClassName:"+getClassName();
 	}

@@ -6,9 +6,7 @@
 <#assign ignoreCols = ['id','sort','create_by','create_date','update_by','update_date','del_flag','remarks'] + ignoreTreeCols>
 package ${basepackage}.${subpackage}.model;
 
-import ${basepackage}.common.base.entity.<#if table.columns?seq_contains(ignoreTreeCols[0]) && table.columns?seq_contains(ignoreTreeCols[1])>TreeEntity<#else>DateEntity</#if>;
-
-import java.util.Date;
+import ${basepackage}.common.base.entity.<#if table.tree=='true'>TreeEntity<#else>DataEntity</#if>;
 
 /**
  * 功能描述: ${table.tableAlias}
@@ -17,7 +15,7 @@ import java.util.Date;
  * @Blog: http://www.wpcfree.com
  * @Date:
  */
-public class ${className} extends <#if table.columns?seq_contains(ignoreTreeCols[0]) && table.columns?seq_contains(ignoreTreeCols[1])>TreeEntity<#else>DateEntity</#if><${className}> {
+public class ${className} extends <#if table.tree=='true'>TreeEntity<#else>DataEntity</#if><${className}> {
 
 	<#list table.columns as column>
 	<#if !ignoreCols?seq_contains(column)>

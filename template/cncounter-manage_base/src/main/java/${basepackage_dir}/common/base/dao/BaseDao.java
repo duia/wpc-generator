@@ -1,8 +1,8 @@
 package ${basepackage}.common.base.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
+import ${basepackage}.common.base.entity.BaseEntity;
 import ${basepackage}.common.datatables.DataTablesRequest;
 
 /**
@@ -12,17 +12,17 @@ import ${basepackage}.common.datatables.DataTablesRequest;
  * @Blog: http://www.wpcfree.com
  * @Date:
  */
-public interface BaseDao<T extends Serializable, PK extends Serializable> {
+public interface BaseDao<T extends BaseEntity<T>> {
 
     void save(T t);
 
-    void delete(PK id);
+    void delete(Long id);
 
-    void deleteByIds(PK[] ids);
+    void deleteByIds(Long[] ids);
 
     void update(T t);
 
-    T findById(PK id);
+    T findById(Long id);
 
     List<T> queryAll();
     

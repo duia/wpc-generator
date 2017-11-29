@@ -3,7 +3,7 @@
 <#assign shortName = table.shortName>
 package ${basepackage}.${subpackage}.service.impl;
 
-import com.wpc.common.base.service.impl.BaseServiceImpl;
+import com.wpc.common.base.service.impl.<#if table.tree=='true'>Tree</#if>BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import ${basepackage}.${subpackage}.service.${className}Service;
  * @Date:
  */
 @Service
-public class ${className}ServiceImpl extends BaseServiceImpl<${className}, Long> implements ${className}Service {
+public class ${className}ServiceImpl extends <#if table.tree=='true'>Tree</#if>BaseServiceImpl<${className}> implements ${className}Service {
 
     @Autowired
     private ${className}Dao ${classNameLower}Dao;

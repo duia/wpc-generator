@@ -14,6 +14,6 @@ import ${basepackage}.common.base.service.BaseService;
  * @Blog: http://www.wpcfree.com
  * @Date:
  */
-public interface ${className}Service extends BaseService<${className}, Long> {
+public interface ${className}Service extends BaseService<${className}> {
 	
 }
