@@ -15,7 +15,10 @@
 		<result property="${column.columnNameLower}" column="${column.sqlName}"/>
 		</#if>
 		</#list>
-		<#if table.tree == 'true'>
+	</resultMap>
+
+	<#if table.tree == 'true'>
+	<resultMap id="BaseParentResultMap" extends="BaseResultMap" type="${basepackage}.${subpackage}.model.${className}">
 		<association property="parent" javaType="${basepackage}.${subpackage}.model.${className}">
 			<#list table.columns as column>
 			<#if column.pk>
@@ -26,8 +29,8 @@
 			</#if>
 			</#list>
 		</association>
-		</#if>
 	</resultMap>
+	</#if>
 
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="table_columns">
@@ -170,7 +173,7 @@
 	</sql>
 
 	<#if table.tree == 'true'>
-	<select id="findByParentIdsLike" resultMap="BaseResultMap">
+	<select id="findByParentIdsLike" resultMap="BaseParentResultMap">
 		SELECT
 			id,
 			parent_id AS "parent.id",
